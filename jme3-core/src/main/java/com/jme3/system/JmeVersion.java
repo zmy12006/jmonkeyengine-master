@@ -54,13 +54,13 @@ public class JmeVersion {
         }
     }
     
-    public static final String BUILD_DATE       = props.getProperty("build.date", "1900-01-01");
-    public static final String BRANCH_NAME      = props.getProperty("git.branch", "unknown");
-    public static final String GIT_HASH         = props.getProperty("git.hash", "");
-    public static final String GIT_SHORT_HASH   = props.getProperty("git.hash.short", "");
-    public static final String GIT_TAG          = props.getProperty("git.tag", "");
-    public static final String VERSION_NUMBER   = props.getProperty("version.number", "");
-    public static final String VERSION_TAG      = props.getProperty("version.tag", "");
-    public static final String VERSION_FULL     = props.getProperty("version.full", "");
-    public static final String FULL_NAME        = props.getProperty("name.full", "jMonkeyEngine (unknown version)");
+    public static final String BUILD_DATE       = "1900-01-01";//props.getProperty("build.date", "1900-01-01");
+    public static final String BRANCH_NAME      = "unknown";//props.getProperty("git.branch", "unknown");
+    public static final String GIT_HASH         = "";//props.getProperty("git.hash", "");
+    public static final String GIT_SHORT_HASH   = "";//props.getProperty("git.hash.short", "");
+    public static final String GIT_TAG          = "";//props.getProperty("git.tag", "");
+    public static final String VERSION_NUMBER   = "";//props.getProperty("version.number", "");
+    public static final String VERSION_TAG      = "";//props.getProperty("version.tag", "");
+    public static final String VERSION_FULL     = "";//props.getProperty("version.full", "");
+    public static final String FULL_NAME        = "jMonkeyEngine (unknown version)";//props.getProperty("name.full", "jMonkeyEngine (unknown version)");
 }
