@@ -337,6 +337,9 @@ public final class OBJLoader implements AssetLoader {
         } catch (AssetNotFoundException ex){
             logger.log(Level.WARNING, "Cannot locate {0} for model {1}", new Object[]{name, key});
         }
+        catch (AssetLoadException e) {
+        	logger.log(Level.WARNING, "Cannot locate {0} for model {1}", new Object[]{name, key});//***todo add default mtl
+		}
 
         if (matList != null){
             // create face lists for every material
