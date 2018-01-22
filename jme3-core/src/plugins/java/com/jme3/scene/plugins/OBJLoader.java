@@ -45,6 +45,9 @@ import com.jme3.scene.mesh.IndexIntBuffer;
 import com.jme3.scene.mesh.IndexShortBuffer;
 import com.jme3.util.BufferUtils;
 import com.jme3.util.IntMap;
+
+import net.bytebuddy.jar.asm.commons.TryCatchBlockSorter;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -338,7 +341,14 @@ public final class OBJLoader implements AssetLoader {
             logger.log(Level.WARNING, "Cannot locate {0} for model {1}", new Object[]{name, key});
         }
         catch (AssetLoadException e) {
-        	logger.log(Level.WARNING, "Cannot locate {0} for model {1}", new Object[]{name, key});//***todo add default mtl
+        	//logger.log(Level.WARNING, "Cannot locate {0} for model {1}", new Object[]{name, key});//***todo add default mtl
+        	try
+        	{
+        	matList = (MaterialList) assetManager.loadAsset(objName + ".mtl");
+        	}
+        	catch (AssetLoadException e1) {
+        		logger.log(Level.WARNING, "Cannot locate {0} for model {1}", new Object[]{name, key});//***todo add default mtl
+        	}
 		}
 
         if (matList != null){
