@@ -171,6 +171,8 @@ public class MTLLoader implements AssetLoader {
         
         // will crash if path is an empty string
         path = split[split.length-1];
+        path = path.toLowerCase();
+        path = path.replace(".tif", ".png");
         
         String name = new File(path).getName();
         TextureKey texKey = new TextureKey(folderName + name);
