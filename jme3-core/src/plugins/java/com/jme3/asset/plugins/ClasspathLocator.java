@@ -35,9 +35,9 @@ import com.jme3.asset.*;
 import com.jme3.system.JmeSystem;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -76,8 +76,32 @@ public class ClasspathLocator implements AssetLocator {
     }
     
     public AssetInfo locate(AssetManager manager, AssetKey key) {
-        URL url;
+        URL url = null;
         String name = key.getName();
+        
+        //=======================================================
+        if(name.startsWith("file:/"))
+        {
+        	try {
+				url = new URL(name);
+				
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+            try{
+                return UrlAssetInfo.create(manager, key, url);
+            }catch (IOException ex){
+                // This is different handling than URL locator
+                // since classpath locating would return null at the getResource() 
+                // call, otherwise there's a more critical error...
+                throw new AssetLoadException("Failed to read URL " + url, ex);
+            }
+        }
+        //========================================================
+        
+        
         if (name.startsWith("/"))
             name = name.substring(1);
 
@@ -85,21 +109,34 @@ public class ClasspathLocator implements AssetLocator {
 //        if (!name.startsWith(root)){
 //            name = root + name;
 //        }
+        
+        //=======================================================
+        if(name.startsWith("file:/"))
+        {
+        	try {
+				url = new URL(name);
+				
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+            try{
+                return UrlAssetInfo.create(manager, key, url);
+            }catch (IOException ex){
+                // This is different handling than URL locator
+                // since classpath locating would return null at the getResource() 
+                // call, otherwise there's a more critical error...
+                throw new AssetLoadException("Failed to read URL " + url, ex);
+            }
+        }
+        //========================================================
+
 
         if (JmeSystem.isLowPermissions()){
             url = ClasspathLocator.class.getResource("/" + name);
         }else{
             url = Thread.currentThread().getContextClassLoader().getResource(name);
-        }
-
-        if (url == null) {
-            final List<ClassLoader> classLoaders = manager.getClassLoaders();
-            for (final ClassLoader classLoader : classLoaders) {
-                url = classLoader.getResource(name);
-                if(url != null) {
-                    break;
-                }
-            }
         }
 
         if (url == null)
